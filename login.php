@@ -60,6 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
     }
 }
 ?>
+<?php
+include 'includes/header.phtml';
+?>
 </header>
 <body>
     <main>
