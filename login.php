@@ -12,21 +12,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
     require 'class/Database.php';
     // Extraction des données du form, dans des variables distinctes
     extract($_POST);
-    
+
     // LOGIN
     // Tentative de connexion
     // On s'assure que les clés des champs necessaires sont accessibles
-    if(array_key_exists('nom', $_POST) && array_key_exists('mdp', $_POST)) {
-        
+    if(array_key_exists('pseudo', $_POST) && array_key_exists('mdp', $_POST)) {
+
         // Envoi des données
-        $FormValidator = new Form($pdo, $nom, $mdp);
+        $FormValidator = new Form($pdo, $name, $pwd);
         // Tentative de validation
         if($FormValidator->login()) {
             // Init session
             UserSession::init();
             // Inscription dans la session
-            UserSession::connectUser($FormValidator->userModel->getPseudo(), 'u'); // 'u' pour 'user'
-            
+            UserSession::connectUser($FormValidator->userModel->getNickName(), 'u'); // 'u' pour 'user'
+
             // Redirection
             header('Location: views/member.phtml');
             exit;
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
         // Signin
         // Envoi le form
         // Envoi des données
-        $FormValidator = new Form($pdo, $pseudo, $mdp, $photo_utilisateur="");
+        $FormValidator = new Form($pdo, $nickName, $pwd, $email, $avatar="");
         // Tentative de validation
         if(!$FormValidator->signin()) {
             // Redirection
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
             header('Location: login.php');
             exit;
         }
-        
+
     }
 } else if ($_SERVER['REQUEST_METHOD'] === 'GET' && array_key_exists('session', $_GET)) {
     // Deconnexion
@@ -60,53 +60,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
     }
 }
 ?>
-<?php
-include 'includes/header.phtml';
-
-?>
-    <p class="hidden">
-        <?php if (isset($error) && count($error) > 0): ?>
-            <!-- Form or Model ** ?? -->
-            <?= $error[0] ?>
-        <?php endif; ?>
-    </p>
-        <div id="login-box">
-            <h1>Se Connecter</h1>
-            <form method="post">
-                <input type="hidden" name="login">
-                <input type="text" id="login" name="pseudo" placeholder="Pseudo" />
-                <input type="password" id="password" name="mdp" placeholder="Mot de passe" />
-                <input type="submit" value="Se Connecter" />
-            </form>
-        </div>
-        
+</header>
+<body>
+    <main>
+        <p class="hidden">
+            <?php if (isset($error) && count($error) > 0): ?>
+                <!-- Form or Model ** ?? -->
+                <?= $error[0] ?>
+            <?php endif; ?>
+        </p>
+            <div id="login-box">
+                <h1>Se Connecter</h1>
+                <form method="post">
+                    <input type="hidden" name="login">
+                    <input type="text" id="login" name="pseudo" placeholder="Pseudo" />
+                    <input type="password" id="password" name="mdp" placeholder="Mot de passe" />
+                    <input type="submit" value="Se Connecter" />
+                </form>
+                <a href="views/signin.phtml" class="btn-signin">S'inscrire</a>
+            </div>
+    </main>
+</body>
 <?php
 include 'includes/footer.phtml';
 
 ?>
-<!--
-    <div class="wrapper fadeInDown">
-        <div id="formContent">
-             Tabs Titles 
-            
-             Icon 
-            <div class="fadeIn first">
-                <img src="#" id="icon" alt="User Icon" />
-            </div>
-            
-             Login Form 
-            <form class="form" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="login">
-                <input type="text" id="login" class="form-control" name="name" placeholder="login">
-                <input type="text" id="password" class="form-control" name="pwd" placeholder="pwd">
-                <input type="submit" class="fadeIn fourth" value="Log In">
-            </form>
-        </div>
-        <a href="views/signin.phtml" class="btn btn-info">S'inscrire</a>
-    </div>
-    
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-</body>
-</html>
--->

@@ -11,13 +11,13 @@ class UserSession {
         }
     }
 
-    public static function connectUser(string $nom, string $role): void {
-        $_SESSION['utilisateurs']['nom'] = $nom;
+    public static function connectUser(string $name, string $role): void {
+        $_SESSION['utilisateurs']['nom'] = $name;
         $_SESSION['utilisateurs']['role'] = $role;
     }
 
-    public static function disconnectUser(string $nom): void {
-        if($_SESSION['utilisateurs']['nom'] === $nom) {
+    public static function disconnectUser(string $name): void {
+        if($_SESSION['utilisateurs']['nom'] === $name) {
             unset($_SESSION['utilisateurs']);
             session_destroy();
         }
@@ -38,7 +38,7 @@ class UserSession {
      * TODO Error
      */
     public static function getUserRole(): string {
-        return self::isConnected() ? $_SESSION['user']['role'] : 'Role Inconnu';
+        return self::isConnected() ? $_SESSION['utilisateurs']['role'] : 'Role Inconnu';
     }
 
 }

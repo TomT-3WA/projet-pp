@@ -6,7 +6,7 @@ include 'includes/header.phtml';
         <a href="home.php" class="nav-home">Accueil</a>
         <a href="tracks.php" class="nav-active nav-tracks">Tracks</a>
         <a href="#" class="nav-pepe">Peperoonii</a>
-        <a href="#" class="nav-contact">Nous Contacter</a>
+        <a href="contact.php" class="nav-contact">Nous Contacter</a>
     </nav>
 </header>
 <body>

@@ -65,7 +65,6 @@ header nav a {
 header nav a:hover {
     background-color: #5F91D8;
     border-radius: 30px 10px;
-    color: #fff;
     
     transform: scale(1.2);
     transition: all .7s;
@@ -232,7 +231,48 @@ h2 {
     justify-content: center;
 }
 
+.btn-search {
+    background-color: #5F91D8;
+    border-radius: 2rem;
+    padding: 2rem;
+}
+
+.presentation {
+    font-size: 2rem;
+    margin-top: 2rem;
+}
+
+.presentation bold {
+    color: #5F91D8;
+    font-size: 2.2rem;
+}
+
+.btn-search:hover {
+  background-color: #2c4364;
+}
+
+.how-works .btn-add-cart {
+  display: inline-block;
+  padding: 0 1rem;
+}
+
+.how-works .btn-search {
+  display: inline-block;
+}
+
+.how-works .btn-dl {
+  font-size: 2rem;
+}
+
+.how-works .btn-dl:hover {
+  color: #5F91D8;
+}
+
 /*** Slider ***/
+
+.slick-dots li button:before {
+  font-size: 2rem;
+}
 
 .slider img {
     margin: auto;
@@ -288,6 +328,43 @@ h2 {
     margin: 0 3rem;
 }
 
+/*** Menu dÃ©roulant ***/
+
+.trier > ul {
+    list-style-type: none;
+}
+
+.sous {
+    display: none;
+    box-shadow: 0px 1px 2px #ccc;
+    width: 100%;
+    position: absolute;
+    list-style: outside;
+}
+
+.trier > ul li:hover .sous {
+    display: block;
+}
+
+.sous li {
+    width: 100%;
+    text-align: left;
+}
+
+.deroulant > a::after {
+    content: " â–¼";
+    font-size: 2rem;
+}
+
+.trier ul li {
+    width: 25%;
+    position: relative;
+}
+
+.trier {
+    margin-bottom: 15rem;
+}
+
 /********************************* Tracks *************************************/
 
 .offre {
@@ -338,7 +415,7 @@ h2 {
     align-items: center;
 }
 
-.browse-tracks-actions button {
+.btn-add-cart {
     display: flex;
 
     font-size: 2rem;
@@ -355,17 +432,67 @@ h2 {
     transition: all .7s;
 }
 
-.browse-tracks-actions button:hover {
+.btn-add-cart:hover {
     background-color: #450000;
 }
 
-.browse-tracks-actions button i {
+.btn-add-cart i {
     margin: 0.5rem 1rem;
 }
 
 .browse-tracks-actions a {
     font-size: 2rem;
     margin: .5rem;
+}
+
+/********************************* Log In *************************************/
+
+.btn-signin {
+  margin: 2rem auto;
+  width: 150px;
+  height: 32px;
+  background: #0d6251;
+  border: none;
+  border-radius: 2px;
+  color: #FFF;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: 0.1s ease;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-signin:hover,
+.btn-signin:focus {
+  opacity: 0.8;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  transition: 0.1s ease;
+}
+
+.btn-signin:active {
+  opacity: 1;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  transition: 0.1s ease;
+}
+
+/********************************* Contact *************************************/
+
+.div-form {
+  display: flex;
+  justify-content: center;
+}
+
+.div-form form input {
+  width: 100%;
+  height: 3rem;
+  margin: 2rem 0;
+}
+
+.div-form input[name="msg"] {
+  height: 20rem;
 }
 
 /*******************************************************************************

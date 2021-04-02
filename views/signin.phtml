@@ -19,7 +19,7 @@
         <a href="../home.phtml" class="logo"><img src="../img/Logo PP_Simple.png" alt="Logo du Projet"></a>
         <div class="header-tab">
             <div class="non-authentificated">
-        <a href="#" id="btnModal" class="sign-up">S'inscrire | Se Connecter</a>
+        <a href="../login.php" class="sign-up">Se Connecter</a>
             </div>
         <a href="#" class="cart"><i class="fas fa-shopping-cart"></i></a>
         </div>
@@ -29,9 +29,11 @@
     <main>
         <div id="login-box">
             <h1>S'inscrire</h1>
-            <form action="../login.php" method="post">
+            <form action="../login.php" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="signin">
                 <input type="text" id="login" name="pseudo" placeholder="Pseudo">
+                <input type="email" id="email" name="email" placeholder="Email">
+                <input type="file" id="avatar" class="form-control" name="avatar" placeholder="avatar">
                 <input type="text" id="password" name="mdp" placeholder="Mot de passe">
                 <input type="submit" value="S'inscrire">
             </form>

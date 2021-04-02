@@ -4,37 +4,42 @@ declare(strict_types=1);
 // Ici il faudra appeler la dependance permettant de se connecter à une bdd
 
 class UserModel {
-    private int $id_utilisateur;
-    private string $pseudo;
-    private string $mdp;
+    private int $id;
+    private string $nickName;
+    private string $password;
     private string $email;
-    private string $photo_utilisateur;
+    private string $avatar;
     private DateTime $created_at;
 
-    private bool $statut = false;
+    private bool $isValid = false;
     private PDO $connect;
     private string $errorMsg;
 
-    public function __construct(string $pseudo, string $mdp, string $email, PDO $pdo) {
-        $this->pseudo = $pseudo;
-        $this->mdp = $mdp;
+    public function __construct(string $nickName, string $password, string $email, string $avatar, PDO $pdo) {
+        $this->nickName = $nickName;
+        $this->password = $password;
         $this->email = $email;
+        $this->avatar = $avatar;
         $this->created_at = new DateTime;
 
         $this->connect = $pdo;
     }
 
     // Getters / Setters
-    public function getPseudo(): string {
-        return $this->pseudo;
+    public function getNickName(): string {
+        return $this->nickName;
+    }
+
+    public function getPassword(): string {
+        return $this->password;
     }
 
     public function getEmail(): string {
         return $this->email;
     }
 
-    public function getMdp(): string {
-        return $this->mdp;
+    public function getAvatar(): string {
+        return $this->avatar;
     }
 
     // Methods
@@ -46,16 +51,16 @@ class UserModel {
     public function isMember(): bool {
         try {
             // Get datas from db to match user
-            if ($user = $this->findByPseudo($this->pseudo)) {
+            if ($user = $this->findByNickname($this->nickName)) {
                 // Test si correspondance avec les datas existantes
-                if($this->pseudo === $user['pseudo']) {
+                if($this->nickName === $user['pseudo']) {
                     // Test si correspondance avec les datas existantes
-                    if($this->mdp === $user['mdp']) {
-                        return $this->statut = true;
+                    if($this->password === $user['mdp']) {
+                        return $this->isValid = true;
                     } else
                         throw new PDOException("Mot de pass incorrect");
                 } else
-                    throw new PDOException("Pseudo incorrect");
+                    throw new PDOException("Nickname incorrect");
             } else
                 throw new PDOException("Utilisateur inconnu");
 
@@ -63,11 +68,10 @@ class UserModel {
             echo $e->getMessage();
         }
 
-
-        return $this->statut = false;
+        return $this->isValid = false;
     }
 
-    public function findByPseudo(string $pseudo): ?array {
+    public function findByNickname(string $pseudo): ?array {
         // SELECT name, pwd, email From user Where name LIKE %'value'%
         $sql = "SELECT id_utilisateur, pseudo, mdp, email, created_at From utilisateurs Where pseudo LIKE :pseudo";
 
@@ -102,11 +106,11 @@ class UserModel {
     }
 
     // Insert One
-    public function insert(string $pseudo, string $mdp, string $email, string $photo_utilisateur='') {
+    public function insert(string $nickName, string $pass, string $email, string $avatar='') {
         // Vérifier le doublon
         try {
             // Get datas from db to match user
-            if ($user = $this->findByPseudo($this->pseudo) || $user = $this->findByEmail($this->email)) {
+            if ($user = $this->findByNickname($this->nickName) || $user = $this->findByEmail($this->email)) {
                 // Membre déjà existant
                 throw new PDOException("Un utilisateur existe déjà avec ce pseudo ou email !!! ");
             } else {
@@ -114,17 +118,17 @@ class UserModel {
                 // SELECT name, pwd, email From user Where name LIKE %'value'%
                 $sql =
                     "INSERT INTO `utilisateurs`(`pseudo`, `email`, `mdp`, `photo_utilisateur`, `created_at`)
-                    VALUES (:pseudo, :email, :mdp, :photo_utilisateur, now())";
+                    VALUES (:pseudo, :email, :pass, :avatar, now())";
 
                 // Contruire la requête
                 $q = $this->connect->prepare($sql);
 
                 // Transmettre le paramètre
                 $q->execute([
-                    ':pseudo' => $pseudo,
+                    ':pseudo' => $nickName,
                     ':email'  => $email,
-                    ':mdp'   => $mdp,
-                    ':photo_utilisateur' => empty($photo_utilisateur) ? null : $photo_utilisateur
+                    ':pass'   => $pass,
+                    ':avatar' => empty($avatar) ? null : $avatar
                 ]);
 
                 return $q->lastInsertId;
@@ -135,11 +139,8 @@ class UserModel {
         }
 
 
-        return $this->statut = false;
-
-
+        return $this->isValid = false;
 
     }
-
 
 }
